@@ -4,24 +4,19 @@ FROM ubuntu:18.04
 RUN cp /etc/apt/sources.list /etc/apt/sources.list.bak
 COPY apt-sources /etc/apt/sources.list
 
-RUN apt-get update && apt-get install -y build-essential cmake \
-	python3-dev python3 python3-pip git curl wget
+RUN apt-get update
+	# download tools
+	&& apt-get install -y git curl wget \
+	# net tools
+	&& apt-get install -y net-tools iputils-ping \
+	# develop tools
+	&& apt-get install -y build-essential cmake python3-dev python3 python3-pip 
 
 # install vim8
 RUN apt-get install -y software-properties-common \
 	&& add-apt-repository ppa:jonathonf/vim \
 	&& apt-get update \
 	&& apt-get install -y vim
-
-# RUN git clone https://github.com/vim/vim.git
-# RUN apt-get -y install libncurses5-dev libgtk3.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev
-# RUN cd vim
-# RUN ./configure --with-features=huge --enable-multibyte \
-#    --enable-python3interp --enable-cscope \
-#	--with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/ \
-#	--prefix=/usr/local/vim
-# RUN make
-# RUN make install
 
 # node/npm support
 RUN apt-get install -y node.js \
@@ -47,7 +42,15 @@ RUN pip3 install pipenv \
 	&& pipenv install \
 	&& pipenv run pip3 install flask
 	
-
+# RUN git clone https://github.com/vim/vim.git
+# RUN apt-get -y install libncurses5-dev libgtk3.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev
+# RUN cd vim
+# RUN ./configure --with-features=huge --enable-multibyte \
+#    --enable-python3interp --enable-cscope \
+#	--with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/ \
+#	--prefix=/usr/local/vim
+# RUN make
+# RUN make install
 
 
 
